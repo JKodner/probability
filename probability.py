@@ -58,11 +58,10 @@ def combination(n, r, rep=False):
 			second = factorial(r) * factorial(n-1)
 		return first / second
 
-def prob_list(length, **kwargs):
-	"""Returns a list with the length of the 'length' parameter. The list's contents are of the
-	keys for the **kwargs parameters. The amount of times each item appears are in the list, is
-	the number of the item's key. Therefore, the item's probability of appearing in the list
-	is: item's key/list's length.\n
+def prob_list(**kwargs):
+	"""The list's contents are of the keys for the **kwargs parameters. 
+	The amount of times each item appears are in the list, is the number of the item's key. 
+	Therefore, the item's probability of appearing in the list is: item's key/list's length.\n
 	If the amount of items in the list is less than the list's length, the remaining contents
 	are replaced with the 'None' keyword."""
 	lst = []
@@ -72,8 +71,6 @@ def prob_list(length, **kwargs):
 	for i in kwargs.keys():
 		for x in range(kwargs[i]):
 			lst.append(i)
-	for i in range(length - len(lst)):
-		lst.append(None)
 	return lst
 
 def get_prob(key, lst, notkey=False, fract=True):
