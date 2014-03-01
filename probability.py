@@ -39,13 +39,16 @@ def permutation(n, r, rep=False):
 		return first / second
 
 def combination(n, r, rep=False):
-	"""Returns the number of Combinations in a set.\n
+	"""Returns the number of Combinations in a set.
+
 	Three Parameters: 
 	n = number of items
 	r = number of those items
-	rep = True if Repition is allowed, False if Repition is not allowed (default=False).\n
+	rep = True if Repition is allowed, False if Repition is not allowed (default=False).
+
 	Formula with No Repition: C(n,r) = n! / r!(n-r)!
-	Formula with Repition: C(n,r) = (n+r-1)! / r!(n-1)!\n
+	Formula with Repition: C(n,r) = (n+r-1)! / r!(n-1)!
+	
 	Note: Function does not return decimals. The numbers can be too big, and may cause
 	Overflow Errors if converted to float."""
 	if not (isinstance(n, int) and isinstance(r, int) and n >= 0 and r >= 0):
@@ -79,12 +82,15 @@ def prob_list(**kwargs):
 
 def get_prob(key, lst, notkey=False, fract=True):
 	"""Returns the Probability of the 'key' parameter being in the inputed 'lst' parameter.
+
 	Note: If you want a Fraction object (from the fractions module) outputted, input the
 	'fract' parameter as True (default). If not, input False, which will output a string. 
 	Please note that Fraction objects are simplified, but the string versions are not.
+	
 	There is also a 'notkey' parameter. If notkey is equal to True, this function outputs the
 	probability of the 'key' parameter not being in the 'lst' parameter. If it equals False
 	(default), this function returns the probability of 'key' being in 'lst'.
+	
 	If the key is not in the list (and 'notkey' is False), a 0/1 fraction is returned."""
 	if notkey not in [True, False]:
 		raise ValueError("Notkey parameter must be True or False")
@@ -115,9 +121,10 @@ def get_prob(key, lst, notkey=False, fract=True):
 
 def odds(key, lst, notkey=False, fract=True):
 	"""Returns the Odds of the 'key' parameter in the inputed 'lst' parameter.
+
 	Note: If you want a Fraction object (from the fractions module) outputted, input the
 	'fract' parameter as True (default). If not, input False, which will output a string. 
-	Please note that Fraction objects are simplified, but the string versions are not.\n."""
+	Please note that Fraction objects are simplified, but the string versions are not."""
 	from fractions import Fraction
 	if fract not in [True, False]:
 		raise ValueError("Fract parameter must be True or False")
