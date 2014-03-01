@@ -87,5 +87,19 @@ def get_prob(key, lst):
 			count += 1
 	return Fraction(count, len(lst))
 
+def odds(key, lst):
+	"""Returns the Odds of the 'key' parameter in the inputed 'lst' parameter.
+	Note: Returns a Fraction object from the 'fractions' module.\n
+	If the key is not in the list, a 0/1 fraction is returned."""
+	from fractions import Fraction
+	success = 0
+	failure = 0
+	for i in lst:
+		if i == key:
+			success += 1
+		else:
+			failure += 1
+	return Fraction(success, failure)
+
 
 
