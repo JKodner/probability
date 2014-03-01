@@ -58,5 +58,22 @@ def combination(n, r, rep=False):
 			second = factorial(r) * factorial(n-1)
 		return first / second
 
+def prob_list(length, **kwargs):
+	lst = []
+	for i in kwargs.keys():
+		for x in range(kwargs[i]):
+			lst.append(i)
+	for i in range(length - len(lst)):
+		lst.append(None)
+	return lst
+
+def get_prob(key, lst):
+	from fractions import Fraction
+	count = 0
+	for i in lst:
+		if i == key:
+			count += 1
+	return Fraction(count, len(lst))
+
 
 
