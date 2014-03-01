@@ -76,12 +76,17 @@ def prob_list(length, **kwargs):
 		lst.append(None)
 	return lst
 
-def get_prob(key, lst, fract=True):
+def get_prob(key, lst, notkey=False, fract=True):
 	"""Returns the Probability of the 'key' parameter being in the inputed 'lst' parameter.
 	Note: If you want a Fraction object (from the fractions module) outputted, input the
 	'fract' parameter as True (default). If not, input False, which will output a string. 
 	Please note that Fraction objects are simplified, but the string versions are not.\n
-	If the key is not in the list, a 0/1 fraction is returned."""
+	There is also a 'notkey' parameter. If notkey is equal to True, this function outputs the
+	probability of the 'key' parameter not being in the 'lst' parameter. If it equals False
+	(default), this function returns the probability of 'key' being in 'lst'.\n
+	If the key is not in the list (and 'notkey' is False), a 0/1 fraction is returned."""
+	if notkey not in [True, False]:
+		raise ValueError("Notkey parameter must be True or False")
 	if fract not in [True, False]:
 		raise ValueError("Fract parameter must be True or False")
 	count = 0
@@ -90,17 +95,28 @@ def get_prob(key, lst, fract=True):
 			count += 1
 	if fract == True:
 		from fractions import Fraction
-		prob = Fraction(count, len(lst))
+		if notkey:
+			if count == 0:
+				prob = Fraction(0, 1)
+			else:
+				prob = Fraction(len(lst) - count, len(lst))
+		else:
+			prob = Fraction(count, len(lst))
 	elif fract == False:
-		prob = '%s/%s' % (count, len(lst))
+		if notkey:
+			if count == 0:
+				prob = '0/1'
+			else:
+				prob = '%s/%s' % (len(lst) - count, len(lst))
+		else:
+			prob = '%s/%s' % (count, len(lst))
 	return prob
 
-def odds(key, lst, fract=True):
+def odds(key, lst, notkey=False, fract=True):
 	"""Returns the Odds of the 'key' parameter in the inputed 'lst' parameter.
 	Note: If you want a Fraction object (from the fractions module) outputted, input the
 	'fract' parameter as True (default). If not, input False, which will output a string. 
-	Please note that Fraction objects are simplified, but the string versions are not.\n
-	If the key is not in the list, a 0/1 fraction is returned."""
+	Please note that Fraction objects are simplified, but the string versions are not.\n."""
 	from fractions import Fraction
 	if fract not in [True, False]:
 		raise ValueError("Fract parameter must be True or False")
@@ -113,9 +129,15 @@ def odds(key, lst, fract=True):
 			failure += 1
 	if fract == True:
 		from fractions import Fraction
-		prob = Fraction(success, failure)
+		if notkey:
+			prob = Fraction(failure, success)
+		else:
+			prob = Fraction(success, failure)
 	elif fract == False:
-		prob = '%s/%s' % (success, failure)
+		if notkey:
+			prob = '%s/%s' % (failure, success)
+		else:
+			prob = '%s/%s' % (success, failure)
 	return prob
 
 
