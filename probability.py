@@ -76,22 +76,34 @@ def prob_list(length, **kwargs):
 		lst.append(None)
 	return lst
 
-def get_prob(key, lst):
+def get_prob(key, lst, fract=True):
 	"""Returns the Probability of the 'key' parameter being in the inputed 'lst' parameter.
-	Note: Returns a Fraction object from the 'fractions' module.\n
+	Note: If you want a Fraction object (from the fractions module) outputted, input the
+	'fract' parameter as True (default). If not, input False, which will output a string. 
+	Please note that Fraction objects are simplified, but the string versions are not.\n
 	If the key is not in the list, a 0/1 fraction is returned."""
-	from fractions import Fraction
+	if fract not in [True, False]:
+		raise ValueError("Fract parameter must be True or False")
 	count = 0
 	for i in lst:
 		if i == key:
 			count += 1
-	return Fraction(count, len(lst))
+	if fract == True:
+		from fractions import Fraction
+		prob = Fraction(count, len(lst))
+	elif fract == False:
+		prob = '%s/%s' % (count, len(lst))
+	return prob
 
-def odds(key, lst):
+def odds(key, lst, fract=True):
 	"""Returns the Odds of the 'key' parameter in the inputed 'lst' parameter.
-	Note: Returns a Fraction object from the 'fractions' module.\n
+	Note: If you want a Fraction object (from the fractions module) outputted, input the
+	'fract' parameter as True (default). If not, input False, which will output a string. 
+	Please note that Fraction objects are simplified, but the string versions are not.\n
 	If the key is not in the list, a 0/1 fraction is returned."""
 	from fractions import Fraction
+	if fract not in [True, False]:
+		raise ValueError("Fract parameter must be True or False")
 	success = 0
 	failure = 0
 	for i in lst:
@@ -99,7 +111,12 @@ def odds(key, lst):
 			success += 1
 		else:
 			failure += 1
-	return Fraction(success, failure)
+	if fract == True:
+		from fractions import Fraction
+		prob = Fraction(success, failure)
+	elif fract == False:
+		prob = '%s/%s' % (success, failure)
+	return prob
 
 
 
