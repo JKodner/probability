@@ -1,4 +1,6 @@
-"""The Probability Module, made by Jacob Kodner"""
+"""The Probability Module"""
+
+__author__ = "Jacob Kodner (jake@kodner.net)"
 
 def factorial(n):
 	"""Returns the Factorial of a number."""
@@ -11,15 +13,18 @@ def factorial(n):
 	return num
 
 def permutation(n, r, rep=False):
-	"""Returns the number of Permutations in a set.\n
+	"""Returns the number of Permutations in a set.
+
 	Three Parameters: 
 	n = number of items
 	r = number of those items
-	rep = True if Repition is allowed, False if Repition is not allowed (default=False).\n
+	rep = True if Repition is allowed, False if Repition is not allowed (default=False).
+
 	Formula with No Repition: P(n,r) = n! / (n-r)!
-	Formula with Repition: (n^r)!\n
+	Formula with Repition: (n^r)!
 	Note: Function does not return decimals. The numbers can be too big, and may cause
 	Overflow Errors if converted to float."""
+
 	if not (isinstance(n, int) and isinstance(r, int) and n >= 0 and r >= 0):
 		raise ValueError("Parameters must be positive integers.")
 	elif rep not in [True, False]:
@@ -32,8 +37,6 @@ def permutation(n, r, rep=False):
 			first = factorial(n**r)
 			second = 1
 		return first / second
-
-		
 
 def combination(n, r, rep=False):
 	"""Returns the number of Combinations in a set.\n
@@ -60,8 +63,9 @@ def combination(n, r, rep=False):
 
 def prob_list(**kwargs):
 	"""The list's contents are of the keys for the **kwargs parameters. 
+
 	The amount of times each item appears are in the list, is the number of the item's key. 
-	Therefore, the item's probability of appearing in the list is: item's key/list's length.\n
+	Therefore, the item's probability of appearing in the list is: item's key/list's length.
 	If the amount of items in the list is less than the list's length, the remaining contents
 	are replaced with the 'None' keyword."""
 	lst = []
@@ -77,10 +81,10 @@ def get_prob(key, lst, notkey=False, fract=True):
 	"""Returns the Probability of the 'key' parameter being in the inputed 'lst' parameter.
 	Note: If you want a Fraction object (from the fractions module) outputted, input the
 	'fract' parameter as True (default). If not, input False, which will output a string. 
-	Please note that Fraction objects are simplified, but the string versions are not.\n
+	Please note that Fraction objects are simplified, but the string versions are not.
 	There is also a 'notkey' parameter. If notkey is equal to True, this function outputs the
 	probability of the 'key' parameter not being in the 'lst' parameter. If it equals False
-	(default), this function returns the probability of 'key' being in 'lst'.\n
+	(default), this function returns the probability of 'key' being in 'lst'.
 	If the key is not in the list (and 'notkey' is False), a 0/1 fraction is returned."""
 	if notkey not in [True, False]:
 		raise ValueError("Notkey parameter must be True or False")
