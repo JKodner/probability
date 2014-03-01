@@ -136,6 +136,3 @@ def odds(key, lst, notkey=False, fract=True):
 		else:
 			prob = '%s/%s' % (success, failure)
 	return prob
-
-
-
