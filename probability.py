@@ -59,7 +59,16 @@ def combination(n, r, rep=False):
 		return first / second
 
 def prob_list(length, **kwargs):
+	"""Returns a list with the length of the 'length' parameter. The list's contents are of the
+	keys for the **kwargs parameters. The amount of times each item appears are in the list, is
+	the number of the item's key. Therefore, the item's probability of appearing in the list
+	is: item's key/list's length.\n
+	If the amount of items in the list is less than the list's length, the remaining contents
+	are replaced with the 'None' keyword."""
 	lst = []
+	for i in kwargs.values():
+		if not isinstance(i, int):
+			raise ValueError("**Kwarg value is not int.")
 	for i in kwargs.keys():
 		for x in range(kwargs[i]):
 			lst.append(i)
@@ -68,6 +77,9 @@ def prob_list(length, **kwargs):
 	return lst
 
 def get_prob(key, lst):
+	"""Returns the Probability of the 'key' parameter being in the inputed 'lst' parameter.
+	Note: Returns a Fraction object from the 'fractions' module.\n
+	If the key is not in the list, a 0/1 fraction is returned."""
 	from fractions import Fraction
 	count = 0
 	for i in lst:
