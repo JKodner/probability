@@ -149,17 +149,25 @@ def odds(key, lst, notkey=False, fract=True):
 	return prob
 
 def odd_list(**kwargs):
+	from fractions import Fraction
 	lst = []
-	for i in kwargs.values():
-		if i.__class__.__name__ == "Fraction":
-			continue
-		if isinstance(i, str):
+	for i in kwargs.keys():
+		x = kwargs[i]
+		if x.__class__.__name__ == "Fraction":
+			new_val = [x.numerator, x.denominator]
+		elif isinstance(x, str):
 			from re import match
 			patt = r'\d+ */ *\d+'
-			if not match(patt, i) and not match(r'\d+', i):
+			if not match(patt, x):
 				raise ValueError('Input is not Fraction')
+			else:
+				new_val = x.split('/')
+				new_val = map(lambda x: x.strip(), new_val)
+				new_val = map(int, new_val)
 		else:
 			raise ValueError('Input is not Fraction')
+		kwargs.update({i: [y for y in new_val]})
+	print kwargs
 
 
 
