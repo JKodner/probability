@@ -149,6 +149,11 @@ def odds(key, lst, notkey=False, fract=True):
 	return prob
 
 def odd_list(**kwargs):
+	"""Returns a list with a content's odds of being in it is equal to the one inputted.
+
+	The contents of the list are the keys of the **kwargs argument, and the odds of the content
+	being in the list is the value."""
+	kwar
 	from fractions import Fraction
 	lst = []
 	for i in kwargs.keys():
@@ -167,17 +172,19 @@ def odd_list(**kwargs):
 		else:
 			raise ValueError('Input is not Fraction')
 		kwargs.update({i: [y for y in new_val]})
-	print kwargs
-
-
-
-
-
-# lst = []
-# for i in kwargs.values():
-# 	if not isinstance(i, int):
-# 		raise ValueError("**Kwarg value is not int.")
-# for i in kwargs.keys():
-# 	for x in range(kwargs[i]):
-# 		lst.append(i)
-# return lst
+	num = sum([i[1] for i in kwargs.values()])
+	num_2 = sum([i[0] for i in kwargs.values()])
+	for i in range(num):
+		lst.append(None)
+	if num_2 > num:
+		for i in range(num2 - num):
+			lst.append(None)
+	for i in kwargs.keys():
+		x = kwargs[i]
+		for y in range(x[0]):
+			for z in lst:
+				pos = lst.index(z)
+				if lst[pos] == None:
+					lst[pos] = i
+					break
+	return lst
