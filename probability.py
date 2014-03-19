@@ -80,7 +80,7 @@ def prob_list(**kwargs):
 			lst.append(i)
 	return lst
 
-def get_prob(key, lst, notkey=False, fract=True):
+def get_prob(key, lst, fract=True, notkey=False):
 	"""Returns the Probability of the 'key' parameter being in the inputed 'lst' parameter.
 
 	Note: If you want a Fraction object (from the fractions module) outputted, input the
@@ -147,3 +147,40 @@ def odds(key, lst, notkey=False, fract=True):
 		else:
 			prob = '%s/%s' % (success, failure)
 	return prob
+
+def status(prob):
+	"""Determines the chance of an event happening with a given probability.
+
+	The possible outputs are: impossible, unlikely, even, likely, certain. 
+
+	The inputted 'prob' value can be a Fraction object from the 'fractions' module, an integer, or
+	in a string version."""
+	if prob.__class__.__name__ == "Fraction":
+		new_val = [prob.numerator, prob.denominator]
+	elif isinstance(prob, str):
+		from re import match
+		patt = r'-?\d+(.\d+)? */ *-?\d+(.\d+)?'
+		if not match(patt, prob):
+			if match(r'-?\d+(.\d+)?', prob):
+				new_val = [float(prob), 1]
+			raise ValueError('Input is not Fraction')
+		else:
+			new_val = prob.split('/')
+			new_val = map(lambda prob: prob.strip(), new_val)
+			new_val = map(float, new_val)
+	elif isinstance(prob, (int, float)) and prob >= 0:
+		new_val = [float(prob), 1]
+	else:
+		raise ValueError('Input is not Fraction')
+	div = new_val[0] / new_val[1]
+	if 0 < div < 0.5:
+		status = "unlikely"
+	elif 0.5 < div < 1:
+		status = "likely"
+	elif div <= 0:
+		status = "impossible"
+	elif div == 0.5:
+		status = "even"
+	elif div >= 1:
+		status = "certain"
+	return status
