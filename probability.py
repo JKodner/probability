@@ -89,12 +89,12 @@ def get_prob(key, lst, fract=True, notkey=False):
 	
 	There is also a 'notkey' parameter. If notkey is equal to True, this function outputs the
 	probability of the 'key' parameter not being in the 'lst' parameter. If it equals False
-	(default), this function returns the probability of 'key' being in 'lst'.
-	
-	If the key is not in the list (and 'notkey' is False), a 0/1 fraction is returned."""
-	if notkey not in [True, False]:
+	(default), this function returns the probability of 'key' being in 'lst'."""
+	if not isinstance(lst, list):
+		raise ValueError("Lst parameter must be a list")
+	elif notkey not in [True, False]:
 		raise ValueError("Notkey parameter must be True or False")
-	if fract not in [True, False]:
+	elif fract not in [True, False]:
 		raise ValueError("Fract parameter must be True or False")
 	count = 0
 	for i in lst:
@@ -104,7 +104,7 @@ def get_prob(key, lst, fract=True, notkey=False):
 		from fractions import Fraction
 		if notkey:
 			if count == 0:
-				prob = Fraction(0, 1)
+				prob = Fraction(0, len(lst))
 			else:
 				prob = Fraction(len(lst) - count, len(lst))
 		else:
@@ -112,12 +112,55 @@ def get_prob(key, lst, fract=True, notkey=False):
 	elif fract == False:
 		if notkey:
 			if count == 0:
-				prob = '0/1'
+				prob = '0/%s' % len(lst)
 			else:
 				prob = '%s/%s' % (len(lst) - count, len(lst))
 		else:
 			prob = '%s/%s' % (count, len(lst))
 	return prob
+
+def get_prob_rand(key, lst, times, fract=True, notkey=False):
+	"""Returns the Probability of the 'key' parameter being in the inputed 'lst' parameter.
+
+	This function calculates the probability by randomly choosing the inputted list's contents
+	and seeing if there is a match to the 'key' parameter. 
+
+	The 'times' parameter is the number of times the function chooses a random content.
+
+	The Fraction returned is: [ # of times found randomly / len(lst) ] * times
+
+	Note: If you want a Fraction object (from the fractions module) outputted, input the
+	'fract' parameter as True (default). If not, input False, which will output a string. 
+	Please note that Fraction objects are simplified, but the string versions are not.
+	
+	There is also a 'notkey' parameter. If notkey is equal to True, this function outputs the
+	probability of the 'key' parameter not being in the 'lst' parameter. If it equals False
+	(default), this function returns the probability of 'key' being in 'lst'."""
+	if not isinstance(lst, list):
+		raise ValueError("Lst parameter must be a list")
+	elif not isinstance(times, int) or times <= 0:
+		raise ValueError("Times parameter must be a positive integer.")
+	elif notkey not in [True, False]:
+		raise ValueError("Notkey parameter must be True or False")
+	elif fract not in [True, False]:
+		raise ValueError("Fract parameter must be True or False")
+	count = 0
+	num = len(lst) * times
+	if key in lst:
+		from random import choice
+		for x in range(len(lst)):
+			for i in range(times):
+				i = choice(lst)
+				if i == key:
+					count += 1
+	if notkey:
+		count = num - count
+	if fract:
+		from fractions import Fraction
+		obj = Fraction(count, num)
+	else:
+		obj = "%s/%s" % (count, num)
+	return obj
 
 def odds(key, lst, notkey=False, fract=True):
 	"""Returns the Odds of the 'key' parameter in the inputed 'lst' parameter.
