@@ -127,7 +127,7 @@ def get_prob_rand(key, lst, times, fract=True, notkey=False):
 
 	The 'times' parameter is the number of times the function chooses a random content.
 
-	The Fraction returned is: [ # of times found randomly / len(lst) ] * times
+	The Fraction returned is: # of times found randomly / len(lst) * times
 
 	Note: If you want a Fraction object (from the fractions module) outputted, input the
 	'fract' parameter as True (default). If not, input False, which will output a string. 
